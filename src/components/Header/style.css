@@ -1,0 +1,16 @@
+.header{
+  margin-top: 2px;
+  border: 1px solid #DA11F0;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: #DA11F0;
+  color: #fff;
+}
+
+.header strong{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 15px;
+  font-size: 25px;
+}
