@@ -17,10 +17,6 @@ function CardMovies(props: any) {
 
   useEffect(() => {
     setMovies(store.movies);
-    // const load = async () => {
-    //   await store.BuscarMovies(search, store.page);
-    // }
-    // load();
   }, [store.search, store.page ,store,store.movies])
 
 
@@ -31,12 +27,6 @@ function CardMovies(props: any) {
       <>
         {movies && movies.results.length > 0 ?
           <div>
-            <div>
-              <h2>Filmes mais votados</h2>
-                {store.countVotes?.map((movie:any) => (
-                  <p key={movie.id}>{movie.title}</p>
-                ))}
-            </div>
             <div>
               <h2>Filmes mais recentes</h2>
                 {store.current?.map((movie:any) => (

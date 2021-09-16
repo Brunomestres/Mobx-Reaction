@@ -1,8 +1,7 @@
 import { makeAutoObservable, reaction} from 'mobx';
-import { Movie } from './interfaces/movie';
-import api from './services/api';
-const API_KEY = 'e4754b23001f38ed6b6b09be083d1dd8';
-export class Store {
+import { Movie } from '../interfaces/movie';
+import { api , API_KEY} from '../services/api';
+export class MovieStore {
 
   constructor(){
     // makeObservable(this,
@@ -19,7 +18,6 @@ export class Store {
     //   countVotes: computed,
     //   current: computed
     // });
-
     makeAutoObservable(this);
 
     const disposer = reaction(() => [this.search,this.page] ,() => {
@@ -52,17 +50,6 @@ export class Store {
   public setLoading(loading:boolean){
     this.loading = loading;
   }
-
-
-  public get countVotes()
-  {
-    if(this.movies.results.length > 0){
-      return this.movies.results.map(m => m).sort((l ,r ) => r.vote_count - l.vote_count)
-        .slice(0 , 5)
-    }
-    return null;
-  }
-
   public get current()
   {
     return this.movies.results.slice(0).map(m => m).sort((l, r) => {
