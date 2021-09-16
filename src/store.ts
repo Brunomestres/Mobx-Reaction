@@ -1,38 +1,29 @@
-import { makeObservable, observable, action, computed, reaction} from 'mobx';
+import { makeAutoObservable, reaction} from 'mobx';
 import { Movie } from './interfaces/movie';
 import api from './services/api';
+const API_KEY = 'e4754b23001f38ed6b6b09be083d1dd8';
 export class Store {
 
   constructor(){
-    makeObservable(this,
-      {
-      loading:observable,
-      search: observable,
-      page: observable,
-      movies: observable,
-      setMovies: action,
-      setPage: action,
-      FindMovies: action,
-      setLoading: action,
-      setSearch: action,
-      countVotes: computed,
-      current: computed
-    });
+    // makeObservable(this,
+    //   {
+    //   loading:observable,
+    //   search: observable,
+    //   page: observable,
+    //   movies: observable,
+    //   setMovies: action,
+    //   setPage: action,
+    //   FindMovies: action,
+    //   setLoading: action,
+    //   setSearch: action,
+    //   countVotes: computed,
+    //   current: computed
+    // });
 
+    makeAutoObservable(this);
 
-    reaction(() => this.search ,() => {
-      this.FindMovies().then(res => {
-        this.setMovies(res?.data);
-        console.log(res?.data)
-      })
-    })
-
-    reaction(() => this.page ,() => {
-      this.FindMovies().then(res => {
-        this.setMovies(res?.data);
-        console.log(res?.data);
-
-      })
+    const disposer = reaction(() => [this.search,this.page] ,() => {
+      this.FindMovies();
     })
   }
 
@@ -66,7 +57,7 @@ export class Store {
   public get countVotes()
   {
     if(this.movies.results.length > 0){
-      return this.movies.results.slice(0).map(m => m).sort((l ,r ) => r.vote_count - l.vote_count)
+      return this.movies.results.map(m => m).sort((l ,r ) => r.vote_count - l.vote_count)
         .slice(0 , 5)
     }
     return null;
@@ -92,9 +83,9 @@ export class Store {
 
     try {
 
-      const response = await api.get(`${this.search}&page=${this.page}`);
+      const response = await api.get(`search/movie?api_key=${API_KEY}&language=pt-BR&query=${this.search}&page=${this.page}`);
 
-      return response;
+      this.setMovies(response.data);
     } catch (error) {
 
       console.log(error);
