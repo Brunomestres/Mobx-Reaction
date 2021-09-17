@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Card, CardMedia, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
-import { MovieStore } from "../../stores/MovieStore";
 import { Movie } from "../../interfaces/movie";
 import { useStyles } from "./styled";
+import { MovieStore } from '../../stores/MovieStore';
 
 type Props = {
   search: string;
@@ -21,7 +21,6 @@ function CardMovies({ search, store }: Props) {
 
   useEffect(() => {
     setMovies(store.movies);
-    store.filterMovies(38);
   }, [store.search, store.page, store, store.movies]);
 
   return (

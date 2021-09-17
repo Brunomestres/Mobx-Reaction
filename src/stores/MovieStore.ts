@@ -1,4 +1,10 @@
-import { makeAutoObservable, reaction, IReactionDisposer } from "mobx";
+
+import {
+  makeAutoObservable,
+  reaction,
+  IReactionDisposer,
+  runInAction,
+} from "mobx";
 import { Movie } from "../interfaces/movie";
 import { api, API_KEY } from "../services/api";
 export class MovieStore {
@@ -74,12 +80,21 @@ export class MovieStore {
     }
   }
 
+  public filterMovies(id: number) {
+    const movies = this.movies.results
+      .map((e) => e)
+      .filter((e) => e.genre_ids.includes(id));
+    runInAction(() => {
+      this.movies = {
+        page: 1,
+        total_pages: 1,
+        total_results: movies.length,
+        results: movies,
+      };
+    });
+    // this.disposer();
 
-  public filterMovies(id:number){
-
-    const movies = this.movies.results.map(e => e).filter( e => e.genre_ids.includes(id));
-    console.log(this.movies)
-    console.log(movies)
-    // return movies;
+    // const filterMovies: Movie = { page:1, results: movies, total_results: movies.length, total_pages: 1  }
+    // this.setMovies(filterMovies);
   }
 }
