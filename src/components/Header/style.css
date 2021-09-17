@@ -1,10 +1,12 @@
 .header{
   margin-top: 2px;
-  border: 1px solid #DA11F0;
+  border: 1px solid #393D8F;
   border-radius: 5px;
   margin-bottom: 10px;
-  background: #DA11F0;
+  background: #393D8F;
   color: #fff;
+  width: 100%;
+  height: 150px;
 }
 
 .header strong{
@@ -13,4 +15,9 @@
   justify-content: center;
   padding: 15px;
   font-size: 25px;
+}
+
+
+.menu:hover{
+  cursor: pointer;
 }

@@ -1,37 +1,48 @@
-import {makeObservable, observable, reaction, action, IReactionDisposer} from 'mobx';
-import { Genre } from '../interfaces/genre';
-import {API_KEY, api } from '../services/api';
+import {
+  makeObservable,
+  observable,
+  reaction,
+  action,
+  IReactionDisposer,
+} from "mobx";
+import { Genre } from "../interfaces/genre";
+import { API_KEY, api } from "../services/api";
 
-
-export class GenreStore{
-
-  public genres: Genre[] = []
+export class GenreStore {
+  public genres: Genre[] = [];
   public disposer: IReactionDisposer;
-  constructor(){
-    makeObservable(this,{
+  public current: number = 0;
+  constructor() {
+    makeObservable(this, {
       genres: observable,
-      setGenre: action
+      current: observable,
+      setGenre: action,
     });
 
-    this.disposer = reaction(() => this.genres,() => {
-      this.getGenre();
-    },
-    { fireImmediately: true } )
-
+    this.disposer = reaction(
+      () => this.genres,
+      () => {
+        this.getGenre();
+      },
+      { fireImmediately: true }
+    );
   }
 
+  public setCurrent(current: number) {
+    this.current = current;
+  }
 
-  public setGenre(genres:Genre[]){
+  public setGenre(genres: Genre[]) {
     this.genres = genres;
   }
 
-
-  public async getGenre(){
+  public async getGenre() {
     try {
-      const response = await api.get<Genre[]>(`genre/movie/list?api_key=${API_KEY}&language=pt-BR`);
-      this.setGenre(response.data);
+      const response = await api.get(
+        `genre/movie/list?api_key=${API_KEY}&language=pt-BR`
+      );
       this.disposer();
-      console.log(this.genres)
+      this.setGenre(response.data.genres);
     } catch (error) {
       console.log(error);
     }

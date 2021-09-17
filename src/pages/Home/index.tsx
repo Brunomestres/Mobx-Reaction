@@ -4,14 +4,13 @@ import Card from '@material-ui/core/Card';
 import { TextField, FormControl  } from '@material-ui/core';
 import CardMovies from '../../components/CardMovies';
 import { MovieStore } from '../../stores/MovieStore';
-import { GenreStore } from '../../stores/GenreStore';
+
 import { useStyles } from './styles';
 
 function Home() {
   const styles = useStyles();
   const [search, setSearch] = useState('');
   const movieStore = useLocalObservable(() => new MovieStore());
-  const genreStore = useLocalObservable(() => new GenreStore());
 
   useEffect(() => {
     movieStore.setPage(1);
