@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Card, CardMedia, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
+import Paper from "@material-ui/core/Paper";
 import { Movie } from "../../interfaces/movie";
 import { useStyles } from "./styled";
 import { MovieStore } from "../../stores/MovieStore";
@@ -33,10 +34,17 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
         <>
           {movies && movies.results.length > 0 ? (
             <div>
-              <div>
-                <h2>Filmes mais recentes</h2>
+              <div className={classes.paper}>
+                <div>
+                  <h2>Filmes adcionados recentemente:</h2>
+                </div>
                 {movieStore.current?.map((movie) => (
-                  <p key={movie.id}>{movie.title}</p>
+                  <Paper className={classes.paperItem} key={movie.id}>
+                    <CardMedia
+                      className={classes.paperImage}
+                      image={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                    />
+                  </Paper>
                 ))}
               </div>
               {movies.results.map((movie) => (
@@ -53,10 +61,9 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
                     >
                       {movie.title}
                     </Typography>
-
                     <p className={classes.genres}>
                       Gênero:
-                      {genreStore.genreByMovie(movie).map(e => ` ${e},`)}
+                      {genreStore.genreByMovie(movie)}
                     </p>
                   </div>
                 </Card>

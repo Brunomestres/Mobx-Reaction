@@ -79,7 +79,7 @@ export class MovieStore {
     }
   }
 
-  public async  filterMovies(id: number) {
+  public async filterMovies(id: number) {
     await this.FindMovies();
     const movies = this.movies.results
       .map((e) => e)
@@ -92,7 +92,5 @@ export class MovieStore {
         results: movies,
       };
     });
-    // this.disposer();
-
   }
 }

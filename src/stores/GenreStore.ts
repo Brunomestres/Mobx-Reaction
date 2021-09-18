@@ -4,6 +4,7 @@ import {
   reaction,
   action,
   IReactionDisposer,
+  computed,
 } from "mobx";
 import { Genre } from "../interfaces/genre";
 import { MovieResults } from "../interfaces/movie";
@@ -12,10 +13,14 @@ import { API_KEY, api } from "../services/api";
 export class GenreStore {
   public genres: Genre[] = [];
   public disposer: IReactionDisposer;
+  public namesGenres: string[] = [];
   constructor() {
     makeObservable(this, {
       genres: observable,
       setGenre: action,
+      namesGenres: observable,
+      genresString: computed,
+      genreByMovie: action,
     });
 
     this.disposer = reaction(
@@ -43,9 +48,15 @@ export class GenreStore {
     }
   }
 
+  public get genresString() {
+    return this.namesGenres.toString();
+  }
+
   public genreByMovie(movie: MovieResults) {
-    return this.genres
+    this.namesGenres = this.genres
       .filter((e) => movie.genre_ids.includes(e.id))
       .map((e) => e.name);
+
+    return this.genresString;
   }
 }

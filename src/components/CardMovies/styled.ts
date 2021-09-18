@@ -25,7 +25,22 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: "15px",
   },
   genres: {
-    marginLeft:"15px",
-    fontSize: '20px'
-  }
+    marginLeft: "15px",
+    fontSize: "20px",
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  paperItem: {
+    width: "90px",
+    height: "70px",
+    margin: "5px",
+  },
+  paperImage: {
+    width: "100%",
+    height: "100%",
+    borderRadius: "3px",
+  },
 }));
