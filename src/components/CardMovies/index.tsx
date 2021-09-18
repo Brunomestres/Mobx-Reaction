@@ -36,7 +36,7 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
             <div>
               <div className={classes.paper}>
                 <div>
-                  <h2>Filmes adcionados recentemente:</h2>
+                  <h2>Filmes adicionados recentemente:</h2>
                 </div>
                 {movieStore.current?.map((movie) => (
                   <Paper className={classes.paperItem} key={movie.id}>
