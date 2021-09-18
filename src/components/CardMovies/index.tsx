@@ -4,28 +4,30 @@ import { Card, CardMedia, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { Movie } from "../../interfaces/movie";
 import { useStyles } from "./styled";
-import { MovieStore } from '../../stores/MovieStore';
+import { MovieStore } from "../../stores/MovieStore";
+import { GenreStore } from "../../stores/GenreStore";
 
 type Props = {
   search: string;
-  store: MovieStore;
+  movieStore: MovieStore;
+  genreStore: GenreStore;
 };
 
-function CardMovies({ search, store }: Props) {
-  const [movies, setMovies] = useState<Movie>(store.movies);
+function CardMovies({ search, movieStore, genreStore }: Props) {
+  const [movies, setMovies] = useState<Movie>(movieStore.movies);
   const classes = useStyles();
 
   const handleChange = (event: any, value: number) => {
-    store.setPage(value);
+    movieStore.setPage(value);
   };
 
   useEffect(() => {
-    setMovies(store.movies);
-  }, [store.search, store.page, store, store.movies]);
+    setMovies(movieStore.movies);
+  }, [movieStore.search, movieStore.page, movieStore, movieStore.movies]);
 
   return (
     <>
-      {store.loading ? (
+      {movieStore.loading ? (
         <h1 style={{ marginLeft: "40%" }}> Carregando... </h1>
       ) : (
         <>
@@ -33,7 +35,7 @@ function CardMovies({ search, store }: Props) {
             <div>
               <div>
                 <h2>Filmes mais recentes</h2>
-                {store.current?.map((movie: any) => (
+                {movieStore.current?.map((movie) => (
                   <p key={movie.id}>{movie.title}</p>
                 ))}
               </div>
@@ -43,20 +45,27 @@ function CardMovies({ search, store }: Props) {
                     className={classes.cover}
                     image={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
                   />
-                  <Typography
-                    className={classes.title}
-                    variant="subtitle1"
-                    component="h2"
-                  >
-                    {movie.title}
-                  </Typography>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Typography
+                      className={classes.title}
+                      variant="subtitle1"
+                      component="h2"
+                    >
+                      {movie.title}
+                    </Typography>
+
+                    <p className={classes.genres}>
+                      Gênero:
+                      {genreStore.genreByMovie(movie).map(e => ` ${e},`)}
+                    </p>
+                  </div>
                 </Card>
               ))}
               <div className={classes.pagination}>
                 <Pagination
-                  count={store.movies.total_pages}
+                  count={movieStore.movies.total_pages}
                   color="secondary"
-                  page={store.page}
+                  page={movieStore.page}
                   onChange={handleChange}
                   className={classes.paginationItem}
                 />

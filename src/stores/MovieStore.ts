@@ -1,4 +1,3 @@
-
 import {
   makeAutoObservable,
   reaction,
@@ -80,7 +79,8 @@ export class MovieStore {
     }
   }
 
-  public filterMovies(id: number) {
+  public async  filterMovies(id: number) {
+    await this.FindMovies();
     const movies = this.movies.results
       .map((e) => e)
       .filter((e) => e.genre_ids.includes(id));
@@ -94,7 +94,5 @@ export class MovieStore {
     });
     // this.disposer();
 
-    // const filterMovies: Movie = { page:1, results: movies, total_results: movies.length, total_pages: 1  }
-    // this.setMovies(filterMovies);
   }
 }

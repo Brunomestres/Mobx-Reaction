@@ -1,13 +1,11 @@
-export interface Movie{
+export interface Movie {
   page: number;
   results: MovieResults[];
-  total_results : number;
-  total_pages: number
+  total_results: number;
+  total_pages: number;
 }
 
-
-
-interface MovieResults{
+export interface MovieResults {
   poster_path?: string;
   adult: boolean;
   overview: string;
@@ -21,5 +19,5 @@ interface MovieResults{
   popularity: number;
   vote_count: number;
   video: boolean;
-  vote_average:number
+  vote_average: number;
 }

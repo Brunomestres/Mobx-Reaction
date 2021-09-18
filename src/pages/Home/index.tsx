@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import Card from "@material-ui/core/Card";
 import { TextField, FormControl } from "@material-ui/core";
 import CardMovies from "../../components/CardMovies";
-
 import { MovieStore } from "../../stores/MovieStore";
 import { GenreStore } from "../../stores/GenreStore";
 import { useStyles } from "./styles";
@@ -15,7 +14,6 @@ type Props = {
 function Home({ movieStore, genreStore }: Props) {
   const styles = useStyles();
   const [search, setSearch] = useState("");
-
   useEffect(() => {
     movieStore.setPage(1);
     movieStore.setSearch(search);
@@ -31,7 +29,7 @@ function Home({ movieStore, genreStore }: Props) {
           onChange={(e) => setSearch(e.target.value)}
         />
       </FormControl>
-      <CardMovies search={search} store={movieStore} />
+      <CardMovies search={search} movieStore={movieStore} genreStore={genreStore} />
     </Card>
   );
 }

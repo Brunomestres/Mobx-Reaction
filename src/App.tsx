@@ -11,7 +11,7 @@ function App() {
   const movieStore = useLocalObservable(() => new MovieStore());
   return (
     <Container maxWidth="md">
-      <Header store={genreStore}/>
+      <Header genreStore={genreStore} movieStore={movieStore}/>
       <Home movieStore={movieStore} genreStore={genreStore} />
     </Container>
   );

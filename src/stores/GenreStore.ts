@@ -6,16 +6,15 @@ import {
   IReactionDisposer,
 } from "mobx";
 import { Genre } from "../interfaces/genre";
+import { MovieResults } from "../interfaces/movie";
 import { API_KEY, api } from "../services/api";
 
 export class GenreStore {
   public genres: Genre[] = [];
   public disposer: IReactionDisposer;
-  public current: number = 0;
   constructor() {
     makeObservable(this, {
       genres: observable,
-      current: observable,
       setGenre: action,
     });
 
@@ -26,10 +25,6 @@ export class GenreStore {
       },
       { fireImmediately: true }
     );
-  }
-
-  public setCurrent(current: number) {
-    this.current = current;
   }
 
   public setGenre(genres: Genre[]) {
@@ -46,5 +41,11 @@ export class GenreStore {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  public genreByMovie(movie: MovieResults) {
+    return this.genres
+      .filter((e) => movie.genre_ids.includes(e.id))
+      .map((e) => e.name);
   }
 }

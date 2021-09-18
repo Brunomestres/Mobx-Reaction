@@ -24,4 +24,8 @@ export const useStyles = makeStyles((theme) => ({
   paginationItem: {
     marginTop: "15px",
   },
+  genres: {
+    marginLeft:"15px",
+    fontSize: '20px'
+  }
 }));
