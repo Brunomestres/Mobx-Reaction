@@ -49,7 +49,7 @@ export class GenreStore {
   }
 
   public get genresString() {
-    return this.namesGenres.toString();
+    return this.namesGenres.join(", ");
   }
 
   public genreByMovie(movie: MovieResults) {

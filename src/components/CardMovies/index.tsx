@@ -15,7 +15,7 @@ type Props = {
 };
 
 function CardMovies({ search, movieStore, genreStore }: Props) {
-  const [movies, setMovies] = useState<Movie>(movieStore.movies);
+  const [movies, setMovies] = useState<Movie>(movieStore.upperTitle);
   const classes = useStyles();
 
   const handleChange = (event: any, value: number) => {
@@ -23,7 +23,7 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
   };
 
   useEffect(() => {
-    setMovies(movieStore.movies);
+    setMovies(movieStore.upperTitle);
   }, [movieStore.search, movieStore.page, movieStore, movieStore.movies]);
 
   return (
@@ -59,7 +59,7 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
                       variant="subtitle1"
                       component="h2"
                     >
-                      {movie.title}
+                      <b>{movie.original_title}</b>
                     </Typography>
                     <p className={classes.genres}>
                       Gênero:
