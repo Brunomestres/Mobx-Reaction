@@ -94,15 +94,15 @@ export class MovieStore {
     });
   }
 
-  public get upperTitle()
-  {
+  public get upperTitle() {
     runInAction(() => {
-      this.movies.results.map( (e) => {
-        e.original_title = e.original_title.toLowerCase().replaceAll(this.search,this.search.toUpperCase());
+      this.movies.results.map((e) => {
+        e.original_title = e.original_title
+          .toLowerCase()
+          .replaceAll(this.search, this.search.toUpperCase());
         return e;
       });
-    })
-    return this.movies
+    });
+    return this.movies;
   }
-
 }
