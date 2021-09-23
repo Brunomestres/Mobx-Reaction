@@ -44,7 +44,6 @@ export class MovieStore {
   }
   public get current() {
     return this.movies.results
-      .slice(0)
       .map((m) => m)
       .sort((l, r) => {
         let a = new Date(l.release_date);
