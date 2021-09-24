@@ -1,8 +1,11 @@
 import {
-  makeAutoObservable,
+  makeObservable,
   reaction,
   IReactionDisposer,
   runInAction,
+  observable,
+  action,
+  computed,
 } from "mobx";
 import { Movie } from "../interfaces/movie";
 import { api, API_KEY } from "../services/api";
@@ -18,7 +21,18 @@ export class MovieStore {
     total_results: 0,
   };
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this, {
+      search: observable,
+      page: observable,
+      loading: observable,
+      movies: observable,
+      setMovies: action,
+      setPage: action,
+      setLoading: action,
+      setSearch: action,
+      cleanMovies: action,
+      current: computed,
+    });
 
     this.disposer = reaction(
       () => [this.search, this.page],
@@ -44,7 +58,7 @@ export class MovieStore {
   }
   public get current() {
     return this.movies.results
-      .map((m) => m)
+      .slice()
       .sort((l, r) => {
         let a = new Date(l.release_date);
         let b = new Date(r.release_date);
@@ -53,7 +67,7 @@ export class MovieStore {
       .slice(0, 5);
   }
 
-  public limparMovies() {
+  public cleanMovies() {
     this.movies.results.length = 0;
   }
 
@@ -71,36 +85,14 @@ export class MovieStore {
 
       this.setMovies(response.data);
     } catch (error) {
-      this.limparMovies();
+      this.cleanMovies();
       console.log(error);
     } finally {
       this.setLoading(false);
     }
   }
 
-  public async filterMovies(id: number) {
-    await this.FindMovies();
-    const movies = this.movies.results
-      .map((e) => e)
-      .filter((e) => e.genre_ids.includes(id));
-    runInAction(() => {
-      this.movies = {
-        page: 1,
-        total_pages: 1,
-        total_results: movies.length,
-        results: movies,
-      };
-    });
-  }
-
-  public get upperTitle() {
-    runInAction(() => {
-      this.movies.results.forEach((e) => {
-        e.original_title = e.original_title
-          .toLowerCase()
-          .replaceAll(this.search, this.search.toUpperCase());
-      });
-    });
-    return this.movies;
+  public disposers() {
+    this.disposer();
   }
 }

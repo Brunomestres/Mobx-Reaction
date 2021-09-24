@@ -12,22 +12,22 @@ type Props = {
 };
 
 function Header({ genreStore, movieStore }: Props) {
-  const [genres, setGenres] = useState<Genre[]>([]);
-  useEffect(() => {
-    setGenres(genreStore.genres);
-  }, [genreStore.genres]);
+  // const [genres, setGenres] = useState<Genre[]>([]);
+  // useEffect(() => {
+  //   setGenres(genreStore.genres);
+  // }, [genreStore.genres]);
 
-  function handleClick(genreId: number) {
-    if (movieStore.movies.results.length <= 0) {
-      return;
-    }
-    movieStore.filterMovies(genreId);
-  }
+  // function handleClick(genreId: number) {
+  //   if (movieStore.movies.results.length <= 0) {
+  //     return;
+  //   }
+  //   movieStore.filterMovies(genreId);
+  // }
 
   return (
     <nav className="header">
       <strong>Buscar Filmes com MOBX</strong>
-      <Box display="flex" flexDirection="row" flexWrap="wrap">
+      {/* <Box display="flex" flexDirection="row" flexWrap="wrap">
         <Box
           onClick={() => movieStore.FindMovies()}
           className="menu"
@@ -52,7 +52,7 @@ function Header({ genreStore, movieStore }: Props) {
             {genre.name}
           </Box>
         ))}
-      </Box>
+      </Box> */}
     </nav>
   );
 }

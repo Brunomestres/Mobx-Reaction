@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Card, CardMedia, Typography } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import Paper from "@material-ui/core/Paper";
-import { Movie } from "../../interfaces/movie";
+import {  Movie } from "../../interfaces/movie";
 import { useStyles } from "./styled";
 import { MovieStore } from "../../stores/MovieStore";
 import { GenreStore } from "../../stores/GenreStore";
@@ -15,7 +15,7 @@ type Props = {
 };
 
 function CardMovies({ search, movieStore, genreStore }: Props) {
-  const [movies, setMovies] = useState<Movie>(movieStore.upperTitle);
+  const [movies, setMovies] = useState<Movie>(movieStore.movies);
   const classes = useStyles();
 
   const handleChange = (event: any, value: number) => {
@@ -23,7 +23,7 @@ function CardMovies({ search, movieStore, genreStore }: Props) {
   };
 
   useEffect(() => {
-    setMovies(movieStore.upperTitle);
+    setMovies(movieStore.movies);
   }, [movieStore.search, movieStore.page, movieStore, movieStore.movies]);
 
   return (
